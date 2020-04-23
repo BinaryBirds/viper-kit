@@ -1,6 +1,6 @@
 # ViperKit
 
-A description of this package.
+VIPER module protocols for Vapor applications.
 
 
 ## Install
@@ -50,7 +50,7 @@ public func configure(_ app: Application) throws {
         ExampleModule(),
     ]
 
-    try Viper(modules).configure(app)
+    try app.viper.use(modules).configure(app)
 }
 ```
 

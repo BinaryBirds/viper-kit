@@ -10,13 +10,18 @@ import Vapor
 ///modular viper architecture handler
 open class Viper {
 
-    public let modules: [ViperModule]
+    public private(set) var modules: [ViperModule]
 
     /// initialize with viper modules
-    public init(_ modules: [ViperModule]) {
-        self.modules = modules
+    public init() {
+        self.modules = []
     }
     
+    /// set viper modules
+    open func use(_ modules: [ViperModule]) {
+        self.modules = modules
+    }
+
     /// configures all the modules using the app
     open func configure(_ app: Application) throws {
         for module in modules {

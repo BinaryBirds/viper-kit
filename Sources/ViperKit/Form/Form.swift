@@ -10,13 +10,12 @@ import Fluent
 
 /// can be used to build forms
 public protocol Form: AnyObject, Encodable {
+
     /// the associated model
     associatedtype Model: ViperModel
 
     /// raw string identifier of the associated model
     var id: String? { get }
-    /// generic message
-    var formMessage: String? { get set }
     
     /// init a form
     init()

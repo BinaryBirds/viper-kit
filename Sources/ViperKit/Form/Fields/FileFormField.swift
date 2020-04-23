@@ -8,7 +8,7 @@
 import Foundation
 
 /// can be used for simple file uploads
-public struct FileFormField: Encodable {
+public struct FileFormField: FormField {
 
     /// generic value field
     public var value: String

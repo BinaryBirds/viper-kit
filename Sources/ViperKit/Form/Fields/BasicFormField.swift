@@ -8,7 +8,7 @@
 import Foundation
 
 /// used to store simple text values
-public struct BasicFormField: Encodable {
+public struct BasicFormField: FormField {
 
     /// value of the form field
     public var value: String

@@ -8,7 +8,7 @@
 import Foundation
 
 /// can be used for option lists
-public struct SelectionFormField: Encodable {
+public struct SelectionFormField: FormField {
     /// selectable option
     public struct Option: Encodable {
         /// key of the option
