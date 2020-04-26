@@ -50,7 +50,7 @@ public func configure(_ app: Application) throws {
         ExampleModule(),
     ]
 
-    try app.viper.use(modules).configure(app)
+    try app.viper.use(modules)
 }
 ```
 
@@ -98,26 +98,6 @@ final class ExampleRouter: RouteCollection {
 }
 ```
 
-## Models
-
-coming soon...
-
-## Controllers
-
-coming soon...
-
-## Forms
-
-coming soon...
-
-## Commands
-
-coming soon...
-
-## Todos
-
-- documentation
-- tests
 
 ## License
 

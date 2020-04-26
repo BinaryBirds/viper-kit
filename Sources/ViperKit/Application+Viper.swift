@@ -19,7 +19,7 @@ public extension Application {
             if let existing = self.storage[ViperKey.self] {
                 return existing
             }
-            let new = Viper()
+            let new = Viper(app: self)
             self.storage[ViperKey.self] = new
             return new
         }

@@ -11,21 +11,19 @@ import Vapor
 open class Viper {
 
     public private(set) var modules: [ViperModule]
+    private unowned var app: Application
 
     /// initialize with viper modules
-    public init() {
+    public init(app: Application) {
         self.modules = []
-    }
-    
-    /// set viper modules
-    open func use(_ modules: [ViperModule]) {
-        self.modules = modules
+        self.app = app
     }
 
-    /// configures all the modules using the app
-    open func configure(_ app: Application) throws {
-        for module in modules {
-            try module.configure(app)
+    /// set viper modules
+    open func use(_ modules: [ViperModule]) throws {
+        self.modules = modules
+        for module in self.modules {
+            try module.configure(self.app)
         }
     }
 
