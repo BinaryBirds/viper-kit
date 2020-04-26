@@ -18,12 +18,6 @@ public protocol ViperModel: Model {
     
     /// path of the model relative to the module (e.g. Module/Model/) can be used as a location or key
     static var path: String { get }
-    
-    /// geneates a new identifier for the model
-    func generateId()
-
-    /// returns the identifier as a raw string
-    var rawIdentifier: String { get }
 }
 
 /// default viper model extension
@@ -33,18 +27,4 @@ public extension ViperModel {
     
     /// path of the model relative to the module (e.g. Module/Model/)
     static var path: String { Module.path + Self.name + "/" }
-}
-
-/// ViperModel works with UUID based id values by default
-public extension ViperModel where Self.IDValue == UUID {
-
-    /// returns the UUID as a string value
-    var rawIdentifier: String {
-        self.id!.uuidString
-    }
-
-    /// sets a new randomly generated UUID as the id
-    func generateId() {
-        self.id = UUID()
-    }
 }
