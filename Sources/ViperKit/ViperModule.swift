@@ -19,12 +19,12 @@ public protocol ViperModule: AnyObject {
     static var path: String { get }
     var path: String { get }
 
-    /// returned routes will be registered
-    var routes: RouteCollection? { get }
+    /// viper router object
+    var router: ViperRouter? { get }
     /// returned Fluent database migrations will be registered
     var migrations: [Migration] { get }
     /// returned command  will be registered
-    var command: AnyCommand? { get }
+    var commandGroup: CommandGroup? { get }
     /// returned lifecycle handler will be registered
     var lifecycleHandler: LifecycleHandler? { get }
     /// returned middlewares will be registered
@@ -50,12 +50,11 @@ public extension ViperModule {
     static var path: String { Self.name + "/" }
     var path: String { Self.path }
 
-    /// route collection returned by the module
-    var routes: RouteCollection? { nil }
+    var router: ViperRouter? { nil }
     /// migrations returned by the module
     var migrations: [Migration] { [] }
     /// command returned by the module
-    var command: AnyCommand? { nil }
+    var commandGroup: CommandGroup? { nil }
     /// lifecycle handler returned by the module
     var lifecycleHandler: LifecycleHandler? { nil }
     /// middlewares returned by the module
@@ -76,11 +75,11 @@ public extension ViperModule {
         for migration in self.migrations {
             app.migrations.add(migration)
         }
-        if let command = self.command {
-            app.commands.use(command, as: self.name)
+        if let commandGroup = self.commandGroup {
+            app.commands.use(commandGroup, as: self.name)
         }
-        if let router = self.routes {
-            try router.boot(routes: app.routes)
+        if let router = self.router {
+            try router.boot(routes: app.routes, using: app)
         }
     }
     

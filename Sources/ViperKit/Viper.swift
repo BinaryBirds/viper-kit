@@ -49,5 +49,12 @@ open class Viper {
         }
         return folded
     }
+    
+    /// invokes a route hook function, with the given routes
+    open func invokeRouters(name: String, routes: RoutesBuilder) throws {
+        for module in self.modules {
+            try module.router?.hook(name: name, routes: routes, using: self.app)
+        }
+    }
 
 }
