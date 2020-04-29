@@ -7,8 +7,7 @@ let package = Package(
        .macOS(.v10_15)
     ],
     products: [
-        .library(name: "ViperKit", targets: ["ViperKit"]),
-        .library(name: "ViperKitDynamic", type: .dynamic, targets: ["ViperKit"]),
+        .library(name: "ViperKit", type: .dynamic, targets: ["ViperKit"]),
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.4.0"),
