@@ -79,7 +79,7 @@ public extension ViperModule {
             app.commands.use(commandGroup, as: self.name)
         }
         if let router = self.router {
-            try router.boot(routes: app.routes, using: app)
+            try router.boot(routes: app.routes, app: app)
         }
     }
     

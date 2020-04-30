@@ -9,7 +9,7 @@ import Vapor
 import Fluent
 
 /// viper controller
-public protocol ViperController: AnyObject {
+public protocol ViperController {
     /// associated viper module
     associatedtype Module: ViperModule
     

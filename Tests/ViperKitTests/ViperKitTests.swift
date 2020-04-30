@@ -7,7 +7,9 @@ final class ViperKitTests: XCTestCase {
         ("testExample", testExample),
     ]
     
-    func testExample() {
+    func testExample() throws {
+        let module = ExampleModule()
+        _ = try XCTUnwrap(module.router)
         XCTAssertTrue(true)
     }
 }
