@@ -8,7 +8,7 @@ VIPER module protocols for Vapor applications.
 Add the repository as a dependency:
 
 ```swift
-.package(url: "https://github.com/binarybirds/viper-kit.git", from: "1.0.0"),
+.package(url: "https://github.com/binarybirds/viper-kit.git", from: "1.2.0"),
 ```
 
 Add ViperKit to the target dependencies:
@@ -60,9 +60,9 @@ You'll have to configure all the modules that you'd like to use.
 
 A module can return:
 
-- a route handler
+- a router
 - migrations
-- a command
+- a command group
 - a lifecycle handler
 - middlewares
 - leaf tags
@@ -70,29 +70,24 @@ A module can return:
 Basic example:
 
 ```swift
-import Vapor
-import Fluent
 import ViperKit
 
 final class ExampleModule: ViperModule {
 
     static var name: String = "example"
 
-    var routes: RouteCollection? {
-        ExampleRouter()
-    }
+    var router: ViperRouter? = ExampleRouter()
 }
 ```
 
 Router:
 
 ```swift
-import Vapor
+import ViperKit
 
-final class ExampleRouter: RouteCollection {
-
-    func boot(routes: RoutesBuilder) throws {
-
+struct ExampleRouter: ViperRouter {
+    
+    func boot(routes: RoutesBuilder, app: Application) throws {
         routes.get { _ in "Hello ViperKit!" }
     }
 }
@@ -102,12 +97,3 @@ final class ExampleRouter: RouteCollection {
 ## License
 
 [WTFPL](LICENSE) - Do what the fuck you want to.
-
-
-
-
-
-
-
-
-
