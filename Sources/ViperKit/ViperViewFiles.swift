@@ -5,9 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 04. 22..
 //
 
-import Vapor
-import Leaf
-
 struct ViperViewFiles: LeafFiles {
 
     var rootDirectory: String

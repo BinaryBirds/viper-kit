@@ -5,10 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 04. 22..
 //
 
-import Vapor
-import Fluent
-import Leaf
-
 /// module component
 public protocol ViperModule {
     /// name of the module

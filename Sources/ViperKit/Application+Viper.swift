@@ -5,8 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 04. 23..
 //
 
-import Vapor
-
 public extension Application {
 
     private struct ViperKey: StorageKey {

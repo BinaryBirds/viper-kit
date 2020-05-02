@@ -5,9 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 04. 22..
 //
 
-import Vapor
-import Fluent
-
 /// viper model
 public protocol ViperModel: Model {
     /// associated viper module

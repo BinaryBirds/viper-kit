@@ -33,9 +33,6 @@ You can override the modulesDirectory if you are using a custom structure, defau
 Here's an example configuration:
 
 ```swift
-import Leaf
-import Fluent
-import Vapor
 import ViperKit
 
 public func configure(_ app: Application) throws {

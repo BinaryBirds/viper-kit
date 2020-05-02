@@ -5,8 +5,6 @@
 //  Created by Tibor Bodecs on 2020. 04. 29..
 //
 
-import Vapor
-
 /// custom router protocol
 public protocol ViperRouter {
     
