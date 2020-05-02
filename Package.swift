@@ -8,7 +8,6 @@ let package = Package(
     ],
     products: [
         .library(name: "ViperKit", targets: ["ViperKit"]),
-        .library(name: "ViperKitDynamic", type: .dynamic, targets: ["ViperKit"]),
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.5.0"),
