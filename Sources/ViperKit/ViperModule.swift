@@ -10,7 +10,7 @@ import Fluent
 import Leaf
 
 /// module component
-public protocol ViperModule: AnyObject {
+public protocol ViperModule {
     /// name of the module
     static var name: String { get }
     var name: String { get }
