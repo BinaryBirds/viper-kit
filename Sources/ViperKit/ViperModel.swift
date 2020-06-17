@@ -15,6 +15,9 @@ public protocol ViperModel: Model {
     
     /// path of the model relative to the module (e.g. Module/Model/) can be used as a location or key
     static var path: String { get }
+    
+    /// path component
+    static var pathComponent: PathComponent { get }
 }
 
 /// default viper model extension
@@ -24,4 +27,7 @@ public extension ViperModel {
     
     /// path of the model relative to the module (e.g. Module/Model/)
     static var path: String { Module.path + Self.name + "/" }
+    
+    /// path component based on the model name
+    static var pathComponent: PathComponent { .init(stringLiteral: self.name) }
 }

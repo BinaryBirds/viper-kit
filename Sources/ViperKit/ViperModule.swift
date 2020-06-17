@@ -14,6 +14,9 @@ public protocol ViperModule {
     /// relative path of the module
     static var path: String { get }
     var path: String { get }
+    
+    /// path component based
+    static var pathComponent: PathComponent { get }
 
     /// viper router object
     var router: ViperRouter? { get }
@@ -34,6 +37,9 @@ public protocol ViperModule {
     
     /// calls a specific hook function and returns the response as a future
     func invoke(name: String, req: Request, params: [String: Any]) -> EventLoopFuture<Any?>?
+    
+    /// transforms a content value into something else
+    func contentFilter(_ input: String) -> String
 }
 
 ///default module implementation
@@ -45,6 +51,9 @@ public extension ViperModule {
     /// path of the module is based on the name by default
     static var path: String { Self.name + "/" }
     var path: String { Self.path }
+    
+    /// path component based on the module name
+    static var pathComponent: PathComponent { .init(stringLiteral: self.name) }
 
     var router: ViperRouter? { nil }
     /// migrations returned by the module
@@ -81,4 +90,7 @@ public extension ViperModule {
     
     /// by default invoke returns nil
     func invoke(name: String, req: Request, params: [String: Any] = [:]) -> EventLoopFuture<Any?>? { nil }
+    
+    /// content filter returns the input by default
+    func contentFilter(_ input: String) -> String { input }
 }

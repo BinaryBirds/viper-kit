@@ -47,4 +47,9 @@ open class Viper {
         }
         return folded
     }
+    
+    /// invokes content filters on the available modules
+    open func invokeContentFilters(_ content: String) -> String {
+        self.modules.reduce(content) { $1.contentFilter($0) }
+    }
 }

@@ -19,6 +19,10 @@ public protocol ViperRouter {
 
 public extension ViperRouter {
     
+    func boot(routes: RoutesBuilder, app: Application) throws {
+        
+    }
+
     func hook(name: String, routes: RoutesBuilder, app: Application) throws {
         
     }
