@@ -5,46 +5,60 @@
 //  Created by Tibor Bodecs on 2020. 04. 22..
 //
 
-struct ViperViewFiles: LeafFiles {
-
+struct ViperViewFiles: LeafSource {
     /// root directory of the project
-    private(set) var rootDirectory: String
+    let rootDirectory: String
     /// modules directory
-    private(set) var modulesDirectory: String
-    /// views directory name
-    private(set) var viewsDirectory: String
+    let modulesDirectory: String
     /// resources directory name
-    private(set) var resourcesDirectory: String
+    let resourcesDirectory: String
+    /// views folder name
+    let viewsFolderName: String
     /// file extension
-    private(set) var fileExtension: String
-    /// nio leaf files pointer
-    private(set) var nioLeafFiles: NIOLeafFiles
+    let fileExtension: String
+    /// fileio used to read files
+    let fileio: NonBlockingFileIO
 
-    init(modulesDirectory: String,
-         viewsDirectory: String,
+    /// standard init method
+    init(rootDirectory: String,
+         modulesDirectory: String,
          resourcesDirectory: String,
+         viewsFolderName: String,
          fileExtension: String,
-         using app: Application) {
+         fileio: NonBlockingFileIO) {
 
-        self.rootDirectory = app.directory.workingDirectory
+        self.rootDirectory = rootDirectory
         self.modulesDirectory = modulesDirectory
-        self.viewsDirectory = viewsDirectory
         self.resourcesDirectory = resourcesDirectory
+        self.viewsFolderName = viewsFolderName
         self.fileExtension = fileExtension
-        self.nioLeafFiles = NIOLeafFiles(fileio: app.fileio)
+        self.fileio = fileio
     }
 
-    func file(path: String, on eventLoop: EventLoop) -> EventLoopFuture<ByteBuffer> {
-        let resourcesPath = self.resourcesDirectory + "/" + self.viewsDirectory
+    /// file template function implementation
+    func file(template: String, escape: Bool = false, on eventLoop: EventLoop) -> EventLoopFuture<ByteBuffer> {
+        let resourcesPath = self.resourcesDirectory + "/" + self.viewsFolderName + "/"
         let ext = "." + self.fileExtension
-        let name = path.replacingOccurrences(of: ".leaf", with: "")
-        let resourceFile = resourcesPath + name + ext
+        let resourceFile = resourcesPath + template + ext
         if FileManager.default.fileExists(atPath: resourceFile) {
-            return self.nioLeafFiles.file(path: self.rootDirectory + resourceFile, on: eventLoop)
+            return self.read(path: self.rootDirectory + resourceFile, on: eventLoop)
         }
-        let components = name.split(separator: "/")
-        let pathComponents = [String(components.first!), self.viewsDirectory] + components.dropFirst().map { String($0) }
+        let components = template.split(separator: "/")
+        let pathComponents = [String(components.first!), self.viewsFolderName] + components.dropFirst().map { String($0) }
         let moduleFile = self.modulesDirectory + "/" + pathComponents.joined(separator: "/") + ext
-        return self.nioLeafFiles.file(path: self.rootDirectory + moduleFile, on: eventLoop)
+        return self.read(path: self.rootDirectory + moduleFile, on: eventLoop)
+    }
+
+    /// reads an existing file and returns a byte buffer future
+    private func read(path: String, on eventLoop: EventLoop) -> EventLoopFuture<ByteBuffer> {
+        self.fileio.openFile(path: path, eventLoop: eventLoop)
+        .flatMapErrorThrowing { _ in throw LeafError(.noTemplateExists(path)) }
+        .flatMap { handle, region in
+            self.fileio.read(fileRegion: region, allocator: .init(), eventLoop: eventLoop)
+            .flatMapThrowing { buffer in
+                try handle.close()
+                return buffer
+            }
+        }
     }
 }

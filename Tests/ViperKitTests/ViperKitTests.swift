@@ -1,3 +1,10 @@
+//
+//  ViperKitTests.swift
+//  ViperKitTests
+//
+//  Created by Tibor Bodecs on 2020. 04. 30..
+//
+
 import XCTest
 @testable import ViperKit
 
@@ -15,8 +22,8 @@ final class ViperKitTests: XCTestCase {
         app.directory.workingDirectory = Environment.get("WORKING_DIR")!
         app.views.use(.leaf)
         app.leaf.useViperViews(modulesDirectory: "Tests/ViperKitTests",
-                               viewsDirectory: "Views",
                                resourcesDirectory: "Resources",
+                               viewsFolderName: "Views",
                                fileExtension: "html")
 
         let view = try app.view.render("Example/Test").wait()

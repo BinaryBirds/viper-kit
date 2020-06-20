@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  Exports.swift
+//  ViperKit
 //
 //  Created by Tibor Bodecs on 2020. 04. 30..
 //
