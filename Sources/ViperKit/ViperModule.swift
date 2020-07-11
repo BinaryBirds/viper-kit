@@ -34,6 +34,9 @@ public protocol ViperModule {
     /// configure components in the following order using the app
     /// tags, lifecycleHandler, middlewares, migrations, command, router
     func configure(_ app: Application) throws
+
+    /// boot the module as a last step of a configuration flow
+    func boot(_ app: Application) throws
     
     /// calls a specific hook function and returns the response as a future
     func invoke(name: String, req: Request, params: [String: Any]) -> EventLoopFuture<Any?>?
@@ -86,11 +89,17 @@ public extension ViperModule {
         if let router = self.router {
             try router.boot(routes: app.routes, app: app)
         }
+        try self.boot(app)
     }
     
+    /// boot the module as a last step of a configuration flow
+    func boot(_ app: Application) throws {}
+
     /// by default invoke returns nil
     func invoke(name: String, req: Request, params: [String: Any] = [:]) -> EventLoopFuture<Any?>? { nil }
     
     /// content filter returns the input by default
     func contentFilter(_ input: String) -> String { input }
+    
+    
 }
