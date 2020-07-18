@@ -19,7 +19,7 @@ open class Viper {
 
     /// set viper modules
     open func use(_ modules: [ViperModule]) throws {
-        self.modules = modules
+        self.modules = modules.sorted { $0.priority > $1.priority }
         for module in self.modules {
             try module.configure(self.app)
         }
@@ -48,8 +48,18 @@ open class Viper {
         return folded
     }
     
-    /// invokes content filters on the available modules
-    open func invokeContentFilters(_ content: String) -> String {
-        self.modules.reduce(content) { $1.contentFilter($0) }
+    /// invokes a sync hook function and merges the results returned by every module hook function
+    open func invokeAllSyncHooks<T>(name: String, req: Request, type: T.Type, params: [String: Any] = [:]) -> [T] {
+        self.modules.map { $0.invokeSync(name: name, req: req, params: params) }.compactMap { $0 as? T }
+    }
+
+    /// invokes a sync hook function, returns the first response
+    open func invokeSyncHook<T>(name: String, req: Request, type: T.Type, params: [String: Any] = [:]) -> T? {
+        for module in self.modules {
+            if let result = module.invokeSync(name: name, req: req, params: params) as? T {
+                return result
+            }
+        }
+        return nil
     }
 }

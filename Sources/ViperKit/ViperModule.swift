@@ -7,6 +7,7 @@
 
 /// module component
 public protocol ViperModule {
+
     /// name of the module
     static var name: String { get }
     var name: String { get }
@@ -17,6 +18,9 @@ public protocol ViperModule {
     
     /// path component based
     static var pathComponent: PathComponent { get }
+
+    /// module priority
+    var priority: Int { get }
 
     /// viper router object
     var router: ViperRouter? { get }
@@ -41,8 +45,8 @@ public protocol ViperModule {
     /// calls a specific hook function and returns the response as a future
     func invoke(name: String, req: Request, params: [String: Any]) -> EventLoopFuture<Any?>?
     
-    /// transforms a content value into something else
-    func contentFilter(_ input: String) -> String
+    /// calls a specific hook function synchronously
+    func invokeSync(name: String, req: Request, params: [String: Any]) -> Any?
 }
 
 ///default module implementation
@@ -50,6 +54,9 @@ public extension ViperModule {
 
     // name of the module
     var name: String { Self.name }
+    
+    /// default module priority 
+    var priority: Int { 1000 }
 
     /// path of the module is based on the name by default
     static var path: String { Self.name + "/" }
@@ -98,8 +105,6 @@ public extension ViperModule {
     /// by default invoke returns nil
     func invoke(name: String, req: Request, params: [String: Any] = [:]) -> EventLoopFuture<Any?>? { nil }
     
-    /// content filter returns the input by default
-    func contentFilter(_ input: String) -> String { input }
-    
-    
+    /// by default invoke sync returns a nil value
+    func invokeSync(name: String, req: Request, params: [String: Any]) -> Any? { nil }
 }
