@@ -8,7 +8,7 @@ VIPER module protocols for Vapor applications.
 Add the repository as a dependency:
 
 ```swift
-.package(url: "https://github.com/binarybirds/viper-kit.git", from: "1.2.0"),
+.package(url: "https://github.com/binarybirds/viper-kit.git", from: "1.3.0"),
 ```
 
 Add ViperKit to the target dependencies:

@@ -7,7 +7,7 @@
 
 open class ViperBuilder {
 
-    public init() {}
+    public required init() {}
     
     open func build() -> ViperModule {
         fatalError("The abstract ViperBuilder can't build any modules.")
