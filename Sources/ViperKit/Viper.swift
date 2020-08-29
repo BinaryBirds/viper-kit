@@ -49,12 +49,12 @@ open class Viper {
     }
     
     /// invokes a sync hook function and merges the results returned by every module hook function
-    open func invokeAllSyncHooks<T>(name: String, req: Request, type: T.Type, params: [String: Any] = [:]) -> [T] {
+    open func invokeAllSyncHooks<T>(name: String, req: Request? = nil, type: T.Type, params: [String: Any] = [:]) -> [T] {
         self.modules.map { $0.invokeSync(name: name, req: req, params: params) }.compactMap { $0 as? T }
     }
 
     /// invokes a sync hook function, returns the first response
-    open func invokeSyncHook<T>(name: String, req: Request, type: T.Type, params: [String: Any] = [:]) -> T? {
+    open func invokeSyncHook<T>(name: String, req: Request? = nil, type: T.Type, params: [String: Any] = [:]) -> T? {
         for module in self.modules {
             if let result = module.invokeSync(name: name, req: req, params: params) as? T {
                 return result

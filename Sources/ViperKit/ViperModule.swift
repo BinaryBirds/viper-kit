@@ -46,7 +46,7 @@ public protocol ViperModule {
     func invoke(name: String, req: Request, params: [String: Any]) -> EventLoopFuture<Any?>?
     
     /// calls a specific hook function synchronously
-    func invokeSync(name: String, req: Request, params: [String: Any]) -> Any?
+    func invokeSync(name: String, req: Request?, params: [String: Any]) -> Any?
 }
 
 ///default module implementation
@@ -106,5 +106,5 @@ public extension ViperModule {
     func invoke(name: String, req: Request, params: [String: Any] = [:]) -> EventLoopFuture<Any?>? { nil }
     
     /// by default invoke sync returns a nil value
-    func invokeSync(name: String, req: Request, params: [String: Any]) -> Any? { nil }
+    func invokeSync(name: String, req: Request?, params: [String: Any]) -> Any? { nil }
 }
