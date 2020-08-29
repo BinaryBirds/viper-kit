@@ -34,6 +34,8 @@ public protocol ViperModule {
     var middlewares: [Middleware] { get }
     /// returned tags will be registered using Leaf
     var tags: [ViperLeafTag] { get }
+    
+    var viewsUrl: URL? { get }
 
     /// configure components in the following order using the app
     /// tags, lifecycleHandler, middlewares, migrations, command, router
@@ -76,7 +78,9 @@ public extension ViperModule {
     var middlewares: [Middleware] { [] }
     /// returned tags will be registered using Leaf
     var tags: [ViperLeafTag] { [] }
-    
+
+    var viewsUrl: URL? { nil }
+
     func configure(_ app: Application) throws {
         for tag in self.tags {
             app.leaf.tags[tag.name] = tag
