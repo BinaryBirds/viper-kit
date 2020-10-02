@@ -1,5 +1,5 @@
-test:
-	swift test --enable-test-discovery
+test: env
+	swift test --enable-test-discovery --parallel
 
 env:
 	echo "WORKING_DIR=~/viper-kit/" > .env.testing
