@@ -21,10 +21,12 @@ final class ViperKitTests: XCTestCase {
         defer { app.shutdown() }
         app.directory.workingDirectory = Environment.get("WORKING_DIR")!
         app.views.use(.leaf)
-        app.leaf.useViperViews(modulesDirectory: "Tests/ViperKitTests",
-                               resourcesDirectory: "Resources",
-                               viewsFolderName: "Views",
-                               fileExtension: "html")
+        LeafEngine.useViperViews(rootDirectory: app.directory.workingDirectory,
+                                 modulesDirectory: "Tests/ViperKitTests",
+                                 resourcesDirectory: "Resources",
+                                 viewsFolderName: "Views",
+                                 fileExtension: "html",
+                                 fileio: app.fileio)
 
         let view = try app.view.render("Example/Test").wait()
         let output = view.data.getString(at: 0, length: view.data.readableBytes, encoding: .utf8)

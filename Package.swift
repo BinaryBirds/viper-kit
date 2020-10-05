@@ -10,9 +10,10 @@ let package = Package(
         .library(name: "ViperKit", targets: ["ViperKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.30.0"),
-        .package(url: "https://github.com/vapor/fluent.git", from: "4.0.0"),
-        .package(url: "https://github.com/vapor/leaf.git", from: "4.0.0-rc"),
+        .package(url: "https://github.com/vapor/vapor", from: "4.30.0"),
+        .package(url: "https://github.com/vapor/fluent", from: "4.0.0"),
+        //.package(url: "https://github.com/vapor/leaf", from: "4.0.0"),
+        .package(url: "https://github.com/tdotclare/leaf", .branch("tau")),
     ],
     targets: [
         .target(name: "ViperKit", dependencies: [

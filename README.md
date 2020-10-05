@@ -62,7 +62,7 @@ A module can return:
 - a command group
 - a lifecycle handler
 - middlewares
-- leaf tags
+- leaf functions
 
 Basic example:
 

@@ -5,18 +5,20 @@
 //  Created by Tibor Bodecs on 2020. 04. 22..
 //
 
-public extension Application.Leaf {
+public extension LeafEngine {
 
-    func useViperViews(modulesDirectory: String = "Sources/App/Modules",
-                       resourcesDirectory: String = "Resources",
-                       viewsFolderName: String = "Views",
-                       fileExtension: String = "leaf") {
+    static func useViperViews(rootDirectory: String,
+                              modulesDirectory: String = "Sources/App/Modules",
+                              resourcesDirectory: String = "Resources",
+                              viewsFolderName: String = "Views",
+                              fileExtension: String = "leaf",
+                              fileio: NonBlockingFileIO) {
 
-        self.sources = .singleSource(ViperViewFiles(rootDirectory: self.application.directory.workingDirectory,
+        self.sources = .singleSource(ViperViewFiles(rootDirectory: rootDirectory,
                                                     modulesDirectory: modulesDirectory,
                                                     resourcesDirectory: resourcesDirectory,
                                                     viewsFolderName: viewsFolderName,
                                                     fileExtension: fileExtension,
-                                                    fileio: self.application.fileio))
+                                                    fileio: fileio))
     }
 }

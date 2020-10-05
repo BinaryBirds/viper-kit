@@ -30,7 +30,7 @@
       },
       {
         "package": "fluent",
-        "repositoryURL": "https://github.com/vapor/fluent.git",
+        "repositoryURL": "https://github.com/vapor/fluent",
         "state": {
           "branch": null,
           "revision": "e681c93df3201a2d8ceef15e8a9a0634578df233",
@@ -48,20 +48,20 @@
       },
       {
         "package": "leaf",
-        "repositoryURL": "https://github.com/vapor/leaf.git",
+        "repositoryURL": "https://github.com/tdotclare/leaf",
         "state": {
-          "branch": null,
-          "revision": "6fc9ec82f5098ab93933e19ceb4ef030f52d646c",
-          "version": "4.0.0-rc.1.4"
+          "branch": "tau",
+          "revision": "d224961e4737d130ac2ea9ee14e0c58fae3060da",
+          "version": null
         }
       },
       {
         "package": "leaf-kit",
-        "repositoryURL": "https://github.com/vapor/leaf-kit.git",
+        "repositoryURL": "https://github.com/tdotclare/leaf-kit.git",
         "state": {
-          "branch": null,
-          "revision": "a3623bd217d1c0327839afbc0bdc2351f7d06c1a",
-          "version": "1.0.0-rc.1.17"
+          "branch": "Tau",
+          "revision": "002a571712120a169fc0b0be6b78f2ed6c6dc989",
+          "version": null
         }
       },
       {
@@ -165,11 +165,11 @@
       },
       {
         "package": "vapor",
-        "repositoryURL": "https://github.com/vapor/vapor.git",
+        "repositoryURL": "https://github.com/vapor/vapor",
         "state": {
           "branch": null,
-          "revision": "fbf36940c29c90f9f6f66105c3e14bf892243dbc",
-          "version": "4.30.0"
+          "revision": "2fba43f582e8981dbd0aaff40b7b45fec49859fd",
+          "version": "4.31.0"
         }
       },
       {

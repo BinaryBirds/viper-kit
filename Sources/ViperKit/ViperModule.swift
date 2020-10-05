@@ -32,13 +32,13 @@ public protocol ViperModule {
     var lifecycleHandler: LifecycleHandler? { get }
     /// returned middlewares will be registered
     var middlewares: [Middleware] { get }
-    /// returned tags will be registered using Leaf
-    var tags: [ViperLeafTag] { get }
+    /// returned functions will be registered using Leaf
+    var leafFunctions: [ViperLeafFunction] { get }
     
     var viewsUrl: URL? { get }
 
     /// configure components in the following order using the app
-    /// tags, lifecycleHandler, middlewares, migrations, command, router
+    /// leaf functions, lifecycleHandler, middlewares, migrations, command, router
     func configure(_ app: Application) throws
 
     /// boot the module as a last step of a configuration flow
@@ -76,14 +76,14 @@ public extension ViperModule {
     var lifecycleHandler: LifecycleHandler? { nil }
     /// middlewares returned by the module
     var middlewares: [Middleware] { [] }
-    /// returned tags will be registered using Leaf
-    var tags: [ViperLeafTag] { [] }
+    /// returned functions will be registered using Leaf
+    var leafFunctions: [ViperLeafFunction] { [] }
 
     var viewsUrl: URL? { nil }
 
     func configure(_ app: Application) throws {
-        for tag in self.tags {
-            app.leaf.tags[tag.name] = tag
+        for function in self.leafFunctions {
+            LeafConfiguration.entities.use(function, asFunction: function.name)
         }
         if let handler = self.lifecycleHandler {
             app.lifecycle.use(handler)
