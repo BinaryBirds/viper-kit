@@ -13,7 +13,7 @@ let package = Package(
         .package(url: "https://github.com/vapor/vapor", from: "4.30.0"),
         .package(url: "https://github.com/vapor/fluent", from: "4.0.0"),
         //.package(url: "https://github.com/vapor/leaf", from: "4.0.0"),
-        .package(url: "https://github.com/tdotclare/leaf", .branch("tau")),
+        .package(url: "https://github.com/binarybirds/leaf", from: "4.0.0-rc"),
     ],
     targets: [
         .target(name: "ViperKit", dependencies: [
