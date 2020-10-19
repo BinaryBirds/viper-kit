@@ -32,8 +32,6 @@ public protocol ViperModule {
     var lifecycleHandler: LifecycleHandler? { get }
     /// returned middlewares will be registered
     var middlewares: [Middleware] { get }
-    /// returned functions will be registered using Leaf
-    var leafFunctions: [ViperLeafFunction] { get }
     
     var viewsUrl: URL? { get }
 
@@ -76,15 +74,10 @@ public extension ViperModule {
     var lifecycleHandler: LifecycleHandler? { nil }
     /// middlewares returned by the module
     var middlewares: [Middleware] { [] }
-    /// returned functions will be registered using Leaf
-    var leafFunctions: [ViperLeafFunction] { [] }
 
     var viewsUrl: URL? { nil }
 
     func configure(_ app: Application) throws {
-        for function in self.leafFunctions {
-            LeafConfiguration.entities.use(function, asFunction: function.name)
-        }
         if let handler = self.lifecycleHandler {
             app.lifecycle.use(handler)
         }

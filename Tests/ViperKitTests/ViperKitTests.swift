@@ -20,15 +20,17 @@ final class ViperKitTests: XCTestCase {
         let app = Application(.testing)
         defer { app.shutdown() }
         app.directory.workingDirectory = Environment.get("WORKING_DIR")!
-        app.views.use(.leaf)
-        LeafEngine.useViperViews(rootDirectory: app.directory.workingDirectory,
-                                 modulesDirectory: "Tests/ViperKitTests",
-                                 resourcesDirectory: "Resources",
-                                 viewsFolderName: "Views",
-                                 fileExtension: "html",
-                                 fileio: app.fileio)
 
-        let view = try app.view.render("Example/Test").wait()
+        try LeafEngine.useViperViews(viewsDirectory: app.directory.viewsDirectory,
+                                     workingDirectory: app.directory.workingDirectory,
+                                     modulesLocation: "Tests/ViperKitTests",
+                                     moduleViewsLocation: "Views",
+                                     fileExtension: "html",
+                                     fileio: app.fileio)
+
+        app.views.use(.leaf)
+
+        let view = try app.leaf.render(template: "Example/Test").wait()
         let output = view.data.getString(at: 0, length: view.data.readableBytes, encoding: .utf8)
         XCTAssertEqual("Hello VIPER!\n", output)
     }

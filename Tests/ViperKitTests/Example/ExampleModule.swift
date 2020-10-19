@@ -15,6 +15,4 @@ final class ExampleModule: ViperModule {
     var router: ViperRouter? = ExampleRouter()
     var commandGroup: CommandGroup? = ExampleCommandGroup()
     var migrations: [Migration] = [ ExampleMigration() ]
-    var leafFunctions: [ViperLeafFunction] = [ ExampleLeafFunction() ]
-    
 }
