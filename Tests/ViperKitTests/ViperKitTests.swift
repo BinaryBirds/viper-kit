@@ -11,6 +11,7 @@ import XCTest
 final class ViperKitTests: XCTestCase {
    
     func testExample() throws {
+
         let module = ExampleModule()
         _ = try XCTUnwrap(module.router)
         XCTAssertTrue(true)
@@ -24,7 +25,7 @@ final class ViperKitTests: XCTestCase {
         try LeafEngine.useViperViews(viewsDirectory: app.directory.viewsDirectory,
                                      workingDirectory: app.directory.workingDirectory,
                                      modulesLocation: "Tests/ViperKitTests",
-                                     moduleViewsLocation: "Views",
+                                     templatesDirectory: "Templates",
                                      fileExtension: "html",
                                      fileio: app.fileio)
 

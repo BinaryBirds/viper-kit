@@ -18,6 +18,6 @@ public extension ViperMigration {
     var version: String { "1.0.0" }
     var priority: Int { 1000 }
 
-    var name: String { "\(self.priority)_\(Self.self)_v\(self.version)" }
+    var name: String { "\(priority)_\(Self.self)_v\(version)" }
 }
 

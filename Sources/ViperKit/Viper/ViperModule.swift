@@ -33,7 +33,8 @@ public protocol ViperModule {
     /// returned middlewares will be registered
     var middlewares: [Middleware] { get }
     
-    var viewsUrl: URL? { get }
+    /// experimental bundle URL detection for future purposes
+    var bundleUrl: URL? { get }
 
     /// configure components in the following order using the app
     /// leaf functions, lifecycleHandler, middlewares, migrations, command, router
@@ -63,7 +64,7 @@ public extension ViperModule {
     var path: String { Self.path }
     
     /// path component based on the module name
-    static var pathComponent: PathComponent { .init(stringLiteral: self.name) }
+    static var pathComponent: PathComponent { .init(stringLiteral: name) }
 
     var router: ViperRouter? { nil }
     /// migrations returned by the module
@@ -75,22 +76,23 @@ public extension ViperModule {
     /// middlewares returned by the module
     var middlewares: [Middleware] { [] }
 
-    var viewsUrl: URL? { nil }
+    /// NOTE: experimental feature
+    var bundleUrl: URL? { Bundle.module(named: Self.name).bundleURL }
 
     func configure(_ app: Application) throws {
-        if let handler = self.lifecycleHandler {
+        if let handler = lifecycleHandler {
             app.lifecycle.use(handler)
         }
-        for middleware in self.middlewares {
+        for middleware in middlewares {
             app.middleware.use(middleware)
         }
-        for migration in self.migrations {
+        for migration in migrations {
             app.migrations.add(migration)
         }
-        if let commandGroup = self.commandGroup {
-            app.commands.use(commandGroup, as: self.name)
+        if let commandGroup = commandGroup {
+            app.commands.use(commandGroup, as: name)
         }
-        if let router = self.router {
+        if let router = router {
             try router.boot(routes: app.routes, app: app)
         }
         try self.boot(app)

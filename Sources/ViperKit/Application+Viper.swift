@@ -14,15 +14,15 @@ public extension Application {
     /// storage for the viper component
     var viper: Viper {
         get {
-            if let existing = self.storage[ViperKey.self] {
+            if let existing = storage[ViperKey.self] {
                 return existing
             }
             let new = Viper(app: self)
-            self.storage[ViperKey.self] = new
+            storage[ViperKey.self] = new
             return new
         }
         set {
-            self.storage[ViperKey.self] = newValue
+            storage[ViperKey.self] = newValue
         }
     }
 }

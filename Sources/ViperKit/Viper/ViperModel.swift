@@ -29,5 +29,5 @@ public extension ViperModel {
     static var path: String { Module.path + Self.name + "/" }
     
     /// path component based on the model name
-    static var pathComponent: PathComponent { .init(stringLiteral: self.name) }
+    static var pathComponent: PathComponent { .init(stringLiteral: name) }
 }
