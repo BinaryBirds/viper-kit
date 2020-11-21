@@ -16,6 +16,32 @@ final class ViperKitTests: XCTestCase {
         _ = try XCTUnwrap(module.router)
         XCTAssertTrue(true)
     }
+    
+    func testHooks() throws {
+        let hooks = HookStorage()
+
+        hooks.register("foo") { args -> String in
+            "foo"
+        }
+        hooks.register("foo") { args -> String in
+            "bar"
+        }
+        hooks.register("bar") { args -> Int in
+            args["number"] as! Int
+        }
+        
+        let result1: String? = hooks.invoke("foo")
+        XCTAssertEqual(result1, "foo")
+        
+        let result2: [String] = hooks.invokeAll("foo")
+        XCTAssertEqual(result2, ["foo", "bar"])
+        
+        let result3: Int? = hooks.invoke("foo")
+        XCTAssertEqual(result3, nil)
+        
+        let result4: Int? = hooks.invoke("bar", args: ["number": 123])
+        XCTAssertEqual(result4, 123)
+    }
 
     func testViperViewFilesConfig() throws {
         let app = Application(.testing)

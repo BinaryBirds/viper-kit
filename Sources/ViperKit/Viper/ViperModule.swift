@@ -40,14 +40,8 @@ public protocol ViperModule {
     /// leaf functions, lifecycleHandler, middlewares, migrations, command, router
     func configure(_ app: Application) throws
 
-    /// boot the module as a last step of a configuration flow
+    /// boots the module as the first step of the configuration flow
     func boot(_ app: Application) throws
-    
-    /// calls a specific hook function and returns the response as a future
-    func invoke(name: String, req: Request, params: [String: Any]) -> EventLoopFuture<Any?>?
-    
-    /// calls a specific hook function synchronously
-    func invokeSync(name: String, req: Request?, params: [String: Any]) -> Any?
 }
 
 ///default module implementation
@@ -79,7 +73,12 @@ public extension ViperModule {
     /// NOTE: experimental feature
     var bundleUrl: URL? { Bundle.module(named: Self.name).bundleURL }
 
+    /// boots the module as the first step of the configuration flow
+    func boot(_ app: Application) throws {}
+
     func configure(_ app: Application) throws {
+        try self.boot(app)
+
         if let handler = lifecycleHandler {
             app.lifecycle.use(handler)
         }
@@ -93,17 +92,8 @@ public extension ViperModule {
             app.commands.use(commandGroup, as: name)
         }
         if let router = router {
-            try router.boot(routes: app.routes, app: app)
+            try router.boot(routes: app.routes)
         }
-        try self.boot(app)
+        let _: [Void] = app.invokeAll("routes", args: ["routes": app.routes])
     }
-    
-    /// boot the module as a last step of a configuration flow
-    func boot(_ app: Application) throws {}
-
-    /// by default invoke returns nil
-    func invoke(name: String, req: Request, params: [String: Any] = [:]) -> EventLoopFuture<Any?>? { nil }
-    
-    /// by default invoke sync returns a nil value
-    func invokeSync(name: String, req: Request?, params: [String: Any]) -> Any? { nil }
 }

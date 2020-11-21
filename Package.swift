@@ -22,6 +22,6 @@ let package = Package(
             .product(name: "Leaf", package: "leaf"),
             .product(name: "LeafKit", package: "leaf-kit"),
         ]),
-        .testTarget(name: "ViperKitTests", dependencies: ["ViperKit"], resources: [.copy("Example/Views")]),
+        .testTarget(name: "ViperKitTests", dependencies: ["ViperKit"], resources: [.copy("Example/Templates")]),
     ]
 )

@@ -10,7 +10,7 @@ import Vapor
 
 struct ExampleRouter: ViperRouter {
     
-    func boot(routes: RoutesBuilder, app: Application) throws {
+    func boot(routes: RoutesBuilder) throws {
         
     }
 }
