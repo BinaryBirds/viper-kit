@@ -1,17 +1,20 @@
 //
-//  File.swift
-//  
+//  Leaf+InvokeHooks.swift
+//  ViperKit
 //
 //  Created by Tibor Bodecs on 2020. 11. 21..
 //
 
 import Leaf
 
-public struct Invoke: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+public struct InvokeHook: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+
     public var unsafeObjects: UnsafeObjects? = nil
 
     public static var callSignature: [LeafCallParameter] { [.string] }
 
+    public init() {}
+    
     public func evaluate(_ params: LeafCallValues) -> LeafData {
         guard let app = app else { return .error("Needs unsafe access to Application") }
         let name = "leaf-\(params[0].string!)"
@@ -20,11 +23,13 @@ public struct Invoke: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
     }
 }
 
-public struct InvokeAll: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+public struct InvokeAllHooks: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
     public var unsafeObjects: UnsafeObjects? = nil
 
     public static var callSignature: [LeafCallParameter] { [.string] }
 
+    public init() {}
+    
     public func evaluate(_ params: LeafCallValues) -> LeafData {
         guard let app = app else { return .error("Needs unsafe access to Application") }
         let name = "leaf-\(params[0].string!)"
