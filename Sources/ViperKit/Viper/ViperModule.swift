@@ -33,7 +33,7 @@ public protocol ViperModule {
     /// returned middlewares will be registered
     var middlewares: [Middleware] { get }
     
-    /// experimental bundle URL detection for future purposes
+    static var bundleUrl: URL? { get }
     var bundleUrl: URL? { get }
 
     /// configure components in the following order using the app
@@ -42,6 +42,8 @@ public protocol ViperModule {
 
     /// boots the module as the first step of the configuration flow
     func boot(_ app: Application) throws
+    
+    static func sample(asset name: String) -> String
 }
 
 ///default module implementation
@@ -70,8 +72,9 @@ public extension ViperModule {
     /// middlewares returned by the module
     var middlewares: [Middleware] { [] }
 
-    /// NOTE: experimental feature
-    var bundleUrl: URL? { Bundle.module(named: Self.name).bundleURL }
+    /// bundle url of the module
+    static var bundleUrl: URL? { nil }
+    var bundleUrl: URL? { Self.bundleUrl }
 
     /// boots the module as the first step of the configuration flow
     func boot(_ app: Application) throws {}
@@ -93,6 +96,19 @@ public extension ViperModule {
         }
         if let router = router {
             try router.boot(routes: app.routes)
+        }
+    }
+    
+    static func sample(asset name: String) -> String {
+        guard let bundleUrl = self.bundleUrl else {
+            fatalError("Missing module bundle")
+        }
+        do {
+            let fileUrl = bundleUrl.appendingPathComponent("Samples").appendingPathComponent(name)
+            return try String(contentsOf: fileUrl, encoding: .utf8)
+        }
+        catch {
+            fatalError(error.localizedDescription)
         }
     }
 }
