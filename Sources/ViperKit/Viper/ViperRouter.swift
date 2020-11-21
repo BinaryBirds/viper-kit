@@ -8,4 +8,9 @@
 /// custom router protocol
 public protocol ViperRouter: RouteCollection {
 
+    
+}
+
+public extension ViperRouter {
+    func boot(routes: RoutesBuilder) throws {}
 }
