@@ -94,6 +94,5 @@ public extension ViperModule {
         if let router = router {
             try router.boot(routes: app.routes)
         }
-        let _: [Void] = app.invokeAll("routes", args: ["routes": app.routes])
     }
 }

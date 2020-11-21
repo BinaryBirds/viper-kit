@@ -7,7 +7,7 @@
 
 import Leaf
 
-public struct InvokeHook: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+public struct InvokeHookLeafEntity: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
 
     public var unsafeObjects: UnsafeObjects? = nil
 
@@ -23,7 +23,7 @@ public struct InvokeHook: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn 
     }
 }
 
-public struct InvokeAllHooks: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
+public struct InvokeAllHooksLeafEntity: LeafUnsafeEntity, LeafNonMutatingMethod, StringReturn {
     public var unsafeObjects: UnsafeObjects? = nil
 
     public static var callSignature: [LeafCallParameter] { [.string] }

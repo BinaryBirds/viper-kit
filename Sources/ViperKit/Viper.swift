@@ -25,5 +25,6 @@ open class Viper {
         for module in self.modules {
             try module.configure(app)
         }
+        let _: [Void] = app.invokeAll("routes", args: ["routes": app.routes])
     }
 }
