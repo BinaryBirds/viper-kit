@@ -43,6 +43,8 @@ public protocol ViperModule {
     /// boots the module as the first step of the configuration flow
     func boot(_ app: Application) throws
     
+    func leafDataGenerator(for req: Request) -> [String: LeafDataGenerator]?
+    
     static func sample(asset name: String) -> String
 }
 
@@ -98,6 +100,8 @@ public extension ViperModule {
             try router.boot(routes: app.routes)
         }
     }
+    
+    func leafDataGenerator(for req: Request) -> [String: LeafDataGenerator]? { nil }
     
     static func sample(asset name: String) -> String {
         guard let bundleUrl = self.bundleUrl else {
