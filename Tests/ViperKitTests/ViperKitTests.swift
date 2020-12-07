@@ -46,6 +46,7 @@ final class ViperKitTests: XCTestCase {
     func testViperViewFilesConfig() throws {
         let app = Application(.testing)
         defer { app.shutdown() }
+
         app.directory.workingDirectory = Environment.get("WORKING_DIR")!
 
         try LeafEngine.useViperViews(viewsDirectory: app.directory.viewsDirectory,

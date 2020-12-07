@@ -18,7 +18,7 @@ public struct InvokeHookLeafEntity: LeafUnsafeEntity, LeafNonMutatingMethod, Str
     public func evaluate(_ params: LeafCallValues) -> LeafData {
         guard let app = app else { return .error("Needs unsafe access to Application") }
         let name = "leaf-\(params[0].string!)"
-        let result: LeafDataRepresentable? = app.hooks.invoke(name)
+        let result: LeafDataRepresentable? = app.invoke(name)
         return result?.leafData ?? .trueNil
     }
 }
@@ -33,7 +33,7 @@ public struct InvokeAllHooksLeafEntity: LeafUnsafeEntity, LeafNonMutatingMethod,
     public func evaluate(_ params: LeafCallValues) -> LeafData {
         guard let app = app else { return .error("Needs unsafe access to Application") }
         let name = "leaf-\(params[0].string!)"
-        let result: [LeafDataRepresentable] = app.hooks.invokeAll(name)
+        let result: [LeafDataRepresentable] = app.invokeAll(name)
         return .array(result.map(\.leafData))
     }
 }
