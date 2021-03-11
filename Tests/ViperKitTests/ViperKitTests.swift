@@ -10,8 +10,11 @@ import XCTest
 
 final class ViperKitTests: XCTestCase {
    
+    private var workingDirectory: String {
+        "/" + #file.split(separator: "/").dropLast(3).joined(separator: "/") + "/"
+    }
+    
     func testExample() throws {
-
         let module = ExampleModule()
         _ = try XCTUnwrap(module.router)
         XCTAssertTrue(true)
@@ -47,18 +50,18 @@ final class ViperKitTests: XCTestCase {
         let app = Application(.testing)
         defer { app.shutdown() }
 
-        app.directory.workingDirectory = Environment.get("WORKING_DIR")!
+        app.directory.workingDirectory = workingDirectory
 
-        try LeafEngine.useViperViews(viewsDirectory: app.directory.viewsDirectory,
-                                     workingDirectory: app.directory.workingDirectory,
-                                     modulesLocation: "Tests/ViperKitTests",
-                                     templatesDirectory: "Templates",
-                                     fileExtension: "html",
-                                     fileio: app.fileio)
+        try TemplateEngine.useViperViews(viewsDirectory: app.directory.viewsDirectory,
+                                         workingDirectory: app.directory.workingDirectory,
+                                         modulesLocation: "Tests/ViperKitTests",
+                                         templatesDirectory: "Templates",
+                                         fileExtension: "html",
+                                         fileio: app.fileio)
 
-        app.views.use(.leaf)
+        app.views.use(.tau)
 
-        let view = try app.leaf.render(template: "Example/Test").wait()
+        let view = try app.tau.render(template: "Example/Test").wait()
         let output = view.data.getString(at: 0, length: view.data.readableBytes, encoding: .utf8)
         XCTAssertEqual("Hello VIPER!\n", output)
     }

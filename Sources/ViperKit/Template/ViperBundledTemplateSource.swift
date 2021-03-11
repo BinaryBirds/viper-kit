@@ -1,11 +1,11 @@
 //
-//  ViperBundledLeafSource.swift
+//  ViperBundledTemplateSource.swift
 //  ViperKit
 //
 //  Created by Tibor Bodecs on 2020. 11. 21..
 //
 
-public struct ViperBundledLeafSource: NonBlockingFileIOLeafSource {
+public struct ViperBundledTemplateSource: NonBlockingFileIOSource {
 
     let module: String
     /// root directory
@@ -42,6 +42,6 @@ public struct ViperBundledLeafSource: NonBlockingFileIOLeafSource {
         if module == name {
             return read(path: fileUrl.path, on: eventLoop)
         }
-        return eventLoop.future(error: LeafError(.noTemplateExists(path)))
+        return eventLoop.future(error: TemplateError(.noTemplateExists(path)))
     }
 }

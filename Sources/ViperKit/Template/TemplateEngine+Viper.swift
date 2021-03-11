@@ -1,14 +1,12 @@
 //
-//  Application+Leaf.swift
+//  TemplateEngine+Viper.swift
 //  ViperKit
 //
 //  Created by Tibor Bodecs on 2020. 04. 22..
 //
 
-import Vapor
-import Leaf
 
-public extension LeafEngine {
+public extension TemplateEngine {
     
     static var modulesSourceKey = "modules"
 
@@ -21,20 +19,19 @@ public extension LeafEngine {
 
         rootDirectory = viewsDirectory
 
-        
-        let defaultSource = NIOLeafFiles(fileio: fileio,
-                                         limits: .default,
-                                         sandboxDirectory: viewsDirectory,
-                                         viewDirectory: viewsDirectory,
-                                         defaultExtension: fileExtension)
+        let defaultSource = FileSource(fileio: fileio,
+                                       limits: .default,
+                                       sandboxDirectory: viewsDirectory,
+                                       viewDirectory: viewsDirectory,
+                                       defaultExtension: fileExtension)
 
-        let modulesSource = ViperLeafSource(workingDirectory: workingDirectory,
+        let modulesSource = ViperTemplateSource(workingDirectory: workingDirectory,
                                             modulesLocation: modulesLocation,
                                             templatesDirectory: templatesDirectory,
                                             fileExtension: fileExtension,
                                             fileio: fileio)
 
-        let multipleSources = LeafSources()
+        let multipleSources = TemplateSources()
         try multipleSources.register(using: defaultSource)
         try multipleSources.register(source: modulesSourceKey, using: modulesSource)
 

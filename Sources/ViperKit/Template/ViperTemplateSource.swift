@@ -1,11 +1,11 @@
 //
-//  ViperLeafSource.swift
+//  ViperTemplateSource.swift
 //  ViperKit
 //
 //  Created by Tibor Bodecs on 2020. 11. 18..
 //
 
-public struct ViperLeafSource: NonBlockingFileIOLeafSource {
+public struct ViperTemplateSource: NonBlockingFileIOSource {
 
     /// application working directory
     public let workingDirectory: String

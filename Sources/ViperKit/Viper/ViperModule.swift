@@ -37,13 +37,13 @@ public protocol ViperModule {
     var bundleUrl: URL? { get }
 
     /// configure components in the following order using the app
-    /// leaf functions, lifecycleHandler, middlewares, migrations, command, router
+    /// tlifecycleHandler, middlewares, migrations, command, router
     func configure(_ app: Application) throws
 
     /// boots the module as the first step of the configuration flow
     func boot(_ app: Application) throws
     
-    func leafDataGenerator(for req: Request) -> [String: LeafDataGenerator]?
+    func templateDataGenerator(for req: Request) -> [String: TemplateDataGenerator]?
     
     static func sample(asset name: String) -> String
 }
@@ -101,7 +101,7 @@ public extension ViperModule {
         }
     }
     
-    func leafDataGenerator(for req: Request) -> [String: LeafDataGenerator]? { nil }
+    func templateDataGenerator(for req: Request) -> [String: TemplateDataGenerator]? { nil }
     
     static func sample(asset name: String) -> String {
         guard let bundleUrl = self.bundleUrl else {
